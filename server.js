@@ -1,8 +1,12 @@
+import getWasteRoute from "./routes/getWaste.js";
+
+
 import uploadRoute from "./routes/upload.js";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+
 
 dotenv.config();
 
@@ -12,6 +16,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/upload", uploadRoute);
+app.use("/wastes", getWasteRoute);
+app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static("uploads"));
 
 // test route
 app.get("/", (req, res) => {

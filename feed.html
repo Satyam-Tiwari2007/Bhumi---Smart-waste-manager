@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bhumi Feed</title>
+</head>
+<body>
+
+<h2>Bhumi Media</h2>
+
+<div id="feed"></div>
+
+<script>
+  async function loadData() {
+    const res = await fetch("http://localhost:5000/wastes");
+    const data = await res.json();
+
+    const feed = document.getElementById("feed");
+
+    data.forEach(item => {
+      const div = document.createElement("div");
+      div.style.border = "1px solid black";
+      div.style.margin = "10px";
+      div.style.padding = "10px";
+
+      div.innerHTML = `
+        <img src="http://localhost:5000/${item.image}" width="200"/><br>
+        <b>Location:</b> ${item.location}<br>
+        <b>Description:</b> ${item.description}
+      `;
+
+      feed.appendChild(div);
+    });
+  }
+
+  loadData();
+</script>
+
+</body>
+</html>
