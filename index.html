@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bhumi Upload Test</title>
+</head>
+<body>
+
+  <h2>Upload Waste</h2>
+
+  <form id="uploadForm">
+    <input type="file" name="image" required /><br><br>
+    <input type="text" name="location" placeholder="Location" required /><br><br>
+    <input type="text" name="description" placeholder="Description" required /><br><br>
+    <button type="submit">Upload</button>
+  </form>
+
+  <p id="result"></p>
+
+  <script>
+    const form = document.getElementById("uploadForm");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+
+      const res = await fetch("http://localhost:5000/upload", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+      document.getElementById("result").innerText = data.message;
+    });
+  </script>
+
+</body>
+</html>
