@@ -1,3 +1,4 @@
+import uploadRoute from "./routes/upload.js";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
@@ -10,6 +11,7 @@ const app = express();
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use("/upload", uploadRoute);
 
 // test route
 app.get("/", (req, res) => {
