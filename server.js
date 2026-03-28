@@ -1,11 +1,11 @@
 import getWasteRoute from "./routes/getWaste.js";
-
-
+import authRoute from "./routes/auth.js";
 import uploadRoute from "./routes/upload.js";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
+import contributionRoute from "./routes/contribution.js";
 
 
 dotenv.config();
@@ -19,6 +19,8 @@ app.use("/upload", uploadRoute);
 app.use("/wastes", getWasteRoute);
 app.use("/uploads", express.static("uploads"));
 app.use("/uploads", express.static("uploads"));
+app.use("/auth", authRoute);
+app.use("/contribution", contributionRoute);
 
 // test route
 app.get("/", (req, res) => {

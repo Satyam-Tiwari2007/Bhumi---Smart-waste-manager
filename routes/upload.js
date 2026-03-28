@@ -20,7 +20,8 @@ router.post("/", upload.single("image"), async (req, res) => {
     const waste = new Waste({
       image: req.file.path,
       location: req.body.location,
-      description: req.body.description
+      description: req.body.description,
+      userId: req.body.userId
     });
 
     await waste.save();
@@ -31,4 +32,4 @@ router.post("/", upload.single("image"), async (req, res) => {
   }
 });
 
-export default router;
+export default router;   

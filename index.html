@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bhumi Upload Test</title>
+  <title>Bhumi Upload</title>
 </head>
 <body>
 
@@ -22,15 +22,31 @@
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      // Get logged-in user
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      // If not logged in
+      if (!user) {
+        alert("Please login first");
+        return;
+      }
+
       const formData = new FormData(form);
 
-      const res = await fetch("http://localhost:5000/upload", {
-        method: "POST",
-        body: formData
-      });
+      // Send userId to backend
+      formData.append("userId", user._id);
 
-      const data = await res.json();
-      document.getElementById("result").innerText = data.message;
+      try {
+        const res = await fetch("http://localhost:5000/upload", {
+          method: "POST",
+          body: formData
+        });
+
+        const data = await res.json();
+        document.getElementById("result").innerText = data.message;
+      } catch (error) {
+        document.getElementById("result").innerText = "Upload failed";
+      }
     });
   </script>
 

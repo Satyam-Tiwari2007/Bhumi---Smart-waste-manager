@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My Contributions</title>
+</head>
+<body>
+
+  <h2>My Contributions ⭐</h2>
+
+  <p id="stars">Loading...</p>
+
+  <script>
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!user) {
+      document.getElementById("stars").innerText = "Please login first";
+    } else {
+
+      async function loadStars() {
+        try {
+          const res = await fetch(`http://localhost:5000/contribution/${user._id}`);
+          const data = await res.json();
+
+          document.getElementById("stars").innerText = "Stars: " + data.stars + " ⭐";
+        } catch (err) {
+          document.getElementById("stars").innerText = "Error loading data";
+        }
+      }
+
+      loadStars();
+    }
+  </script>
+
+</body>
+</html>
