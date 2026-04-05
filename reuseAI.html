@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Image Reuse Suggestion</title>
+</head>
+<body>
+
+  <h2>Upload Waste Image for Reuse Ideas ♻️🤖</h2>
+
+  <input type="file" id="image"><br><br>
+
+  <select id="wasteType">
+    <option value="plastic bottle">Plastic Bottle</option>
+    <option value="glass bottle">Glass Bottle</option>
+    <option value="paper">Paper</option>
+    <option value="tin can">Tin Can</option>
+    <option value="wood block">Wood Block</option>
+  </select><br><br>
+
+  <button onclick="getReuseIdea()">Get AI Reuse Ideas</button>
+
+  <pre id="result"></pre>
+
+  <script>
+    async function getReuseIdea() {
+      const description = document.getElementById("wasteType").value;
+
+      const res = await fetch("http://localhost:5000/ai-suggestion", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ description })
+      });
+
+      const data = await res.json();
+      document.getElementById("result").innerText = data.suggestion;
+    }
+  </script>
+
+</body>
+</html>

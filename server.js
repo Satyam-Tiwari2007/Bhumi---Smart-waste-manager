@@ -6,7 +6,8 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import contributionRoute from "./routes/contribution.js";
-
+import aiSuggestionRoute from "./routes/aiSuggestion.js";
+import dashboardRoute from "./routes/dashboard.js";
 
 dotenv.config();
 
@@ -21,6 +22,8 @@ app.use("/uploads", express.static("uploads"));
 app.use("/uploads", express.static("uploads"));
 app.use("/auth", authRoute);
 app.use("/contribution", contributionRoute);
+app.use("/ai-suggestion", aiSuggestionRoute);
+app.use("/dashboard", dashboardRoute);
 
 // test route
 app.get("/", (req, res) => {

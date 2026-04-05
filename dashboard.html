@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bhumi Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f6fbf6;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: #166534;
+      color: white;
+      height: 100vh;
+      position: fixed;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      margin-top: 0;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      text-decoration: none;
+      margin: 15px 0;
+      cursor: pointer;
+    }
+
+    .main {
+      margin-left: 240px;
+      padding: 30px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+
+    .num {
+      font-size: 40px;
+      font-weight: bold;
+      color: #166534;
+    }
+
+    .records {
+      margin-top: 30px;
+      background: white;
+      padding: 24px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <h2>🌍 Bhumi</h2>
+  <a href="feed.html">Bhumi Media</a>
+  <a href="reuseAI.html">AI Reuse</a>
+  <a href="index.html">Upload Waste</a>
+  <a onclick="logout()">Logout</a>
+</div>
+
+<div class="main">
+  <h1>Welcome Back 👋</h1>
+  <p>Your personal environmental dashboard</p>
+
+  <div class="stats">
+    <div class="card">
+      <p>Total Reports</p>
+      <div class="num" id="reports">0</div>
+    </div>
+
+    <div class="card">
+      <p>Total Contributions</p>
+      <div class="num" id="contributions">0</div>
+    </div>
+
+    <div class="card">
+      <p>Stars Won ⭐</p>
+      <div class="num" id="stars">0</div>
+    </div>
+
+    <div class="card">
+      <p>AI Reuse Actions</p>
+      <div class="num" id="reuse">0</div>
+    </div>
+  </div>
+
+  <div class="records">
+    <h3>My Recent Records</h3>
+    <div id="records">Loading...</div>
+  </div>
+</div>
+
+<script>
+async function loadDashboard() {
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  const res = await fetch(`http://localhost:5000/dashboard/${user._id}`);
+  const data = await res.json();
+
+  document.getElementById("reports").innerText = data.reports;
+  document.getElementById("contributions").innerText = data.contributions;
+  document.getElementById("stars").innerText = data.stars;
+  document.getElementById("reuse").innerText = data.stars;
+
+  let html = "";
+  data.recent.forEach(item => {
+    html += `<p>📍 <b>${item.location}</b> - ${item.description}</p>`;
+  });
+
+  document.getElementById("records").innerHTML = html || "No uploads yet";
+}
+
+function logout() {
+  localStorage.removeItem("user");
+  window.location.href = "login.html";
+}
+
+loadDashboard();
+</script>
+
+</body>
+</html>
