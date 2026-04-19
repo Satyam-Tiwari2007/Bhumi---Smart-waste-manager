@@ -61,6 +61,21 @@
       border-radius: 16px;
       box-shadow: 0 8px 24px rgba(0,0,0,0.06);
     }
+
+    .activity {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .activity img {
+      width: 80px;
+      height: 80px;
+      border-radius: 10px;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -100,7 +115,7 @@
   </div>
 
   <div class="records">
-    <h3>My Recent Records</h3>
+    <h3>My Recent Activity</h3>
     <div id="records">Loading...</div>
   </div>
 </div>
@@ -123,11 +138,21 @@ async function loadDashboard() {
   document.getElementById("reuse").innerText = data.stars;
 
   let html = "";
+
   data.recent.forEach(item => {
-    html += `<p>📍 <b>${item.location}</b> - ${item.description}</p>`;
+    html += `
+      <div class="activity">
+        <img src="http://localhost:5000/${item.image}" />
+        <div>
+          <p><b>📍 ${item.location}</b></p>
+          <p>${item.description}</p>
+        </div>
+      </div>
+    `;
   });
 
-  document.getElementById("records").innerHTML = html || "No uploads yet";
+  document.getElementById("records").innerHTML =
+    html || "No uploads yet";
 }
 
 function logout() {

@@ -24,6 +24,7 @@ app.use("/auth", authRoute);
 app.use("/contribution", contributionRoute);
 app.use("/ai-suggestion", aiSuggestionRoute);
 app.use("/dashboard", dashboardRoute);
+app.use("/uploads", express.static("uploads"));
 
 // test route
 app.get("/", (req, res) => {
