@@ -18,10 +18,6 @@
       padding: 20px;
     }
 
-    .sidebar h2 {
-      margin-top: 0;
-    }
-
     .sidebar a {
       display: block;
       color: white;
@@ -76,6 +72,16 @@
       border-radius: 10px;
       object-fit: cover;
     }
+
+    /* Chatbot */
+    #chatbox {
+      height: 250px;
+      overflow-y: auto;
+      border: 1px solid #eee;
+      padding: 10px;
+      border-radius: 10px;
+      background: #f9f9f9;
+    }
   </style>
 </head>
 <body>
@@ -85,6 +91,7 @@
   <a href="feed.html">Bhumi Media</a>
   <a href="reuseAI.html">AI Reuse</a>
   <a href="index.html">Upload Waste</a>
+  <a href="chatbot.html">AI Chatbot 🤖</a>
   <a onclick="logout()">Logout</a>
 </div>
 
@@ -114,10 +121,28 @@
     </div>
   </div>
 
+  <!-- Activity -->
   <div class="records">
     <h3>My Recent Activity</h3>
     <div id="records">Loading...</div>
   </div>
+
+  <!-- Chatbot -->
+  <div class="records">
+    <h3>🤖 Bhumi AI Assistant</h3>
+
+    <div id="chatbox"></div>
+
+    <div style="display:flex; margin-top:10px;">
+      <input id="chatInput" placeholder="Ask about waste..."
+        style="flex:1; padding:10px; border-radius:10px; border:1px solid #ddd;">
+      <button onclick="sendMessage()"
+        style="margin-left:10px; padding:10px; background:#166534; color:white; border:none; border-radius:10px;">
+        Send
+      </button>
+    </div>
+  </div>
+
 </div>
 
 <script>
@@ -154,6 +179,59 @@ async function loadDashboard() {
   document.getElementById("records").innerHTML =
     html || "No uploads yet";
 }
+
+// 🤖 CHATBOT FUNCTION
+async function sendMessage() {
+  const input = document.getElementById("chatInput");
+  const msg = input.value.trim();
+
+  if (!msg) return;
+
+  const chatbox = document.getElementById("chatbox");
+
+  // user message
+  chatbox.innerHTML += `
+    <div style="text-align:right; margin:5px;">
+      <span style="background:#166534;color:white;padding:8px 12px;border-radius:10px;">
+        ${msg}
+      </span>
+    </div>
+  `;
+
+  input.value = "";
+
+  try {
+    const res = await fetch("http://localhost:5000/chatbot", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ message: msg })
+    });
+
+    const data = await res.json();
+
+    chatbox.innerHTML += `
+      <div style="text-align:left; margin:5px;">
+        <span style="background:white;padding:8px 12px;border-radius:10px;border:1px solid #ddd;">
+          ${data.reply.replace(/\n/g, "<br>")}
+        </span>
+      </div>
+    `;
+
+  } catch (err) {
+    chatbox.innerHTML += `<div style="color:red;">Error connecting</div>`;
+  }
+
+  chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+// Enter key support
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("chatInput").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") sendMessage();
+  });
+});
 
 function logout() {
   localStorage.removeItem("user");

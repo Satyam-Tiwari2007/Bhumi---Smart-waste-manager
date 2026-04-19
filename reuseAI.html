@@ -1,42 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>AI Image Reuse Suggestion</title>
+  <title>AI Reuse Suggestions</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f6fbf6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 420px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      color: #166534;
+      margin-bottom: 10px;
+    }
+
+    p {
+      text-align: center;
+      color: #555;
+      font-size: 14px;
+    }
+
+    select {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background: #166534;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      background: #14532d;
+    }
+
+    .result {
+      margin-top: 20px;
+      background: #f0fdf4;
+      padding: 15px;
+      border-radius: 10px;
+      min-height: 60px;
+    }
+  </style>
 </head>
 <body>
 
-  <h2>Upload Waste Image for Reuse Ideas ♻️🤖</h2>
+<div class="box">
+  <h2>🤖 AI Reuse Suggestion</h2>
+  <p>Select a waste type and get reuse ideas</p>
 
-  <input type="file" id="image"><br><br>
-
-  <select id="wasteType">
+  <select id="type">
     <option value="plastic bottle">Plastic Bottle</option>
-    <option value="glass bottle">Glass Bottle</option>
+    <option value="plastic bucket">Plastic Bucket</option>
+    <option value="plastic chair">Plastic Chair</option>
+    <option value="plastic mug">Plastic Mug</option>
+    <option value="cardboard">Cardboard</option>
     <option value="paper">Paper</option>
+    <option value="cloth">Cloth</option>
+    <option value="old jeans">Old Jeans</option>
+    <option value="glass bottle">Glass Bottle</option>
+    <option value="glass jar">Glass Jar</option>
     <option value="tin can">Tin Can</option>
+    <option value="aluminium can">Aluminium Can</option>
     <option value="wood block">Wood Block</option>
-  </select><br><br>
+    <option value="wood plank">Wood Plank</option>
+    <option value="food waste">Food Waste</option>
+  </select>
 
-  <button onclick="getReuseIdea()">Get AI Reuse Ideas</button>
+  <button onclick="getSuggestion()">Get Ideas</button>
 
-  <pre id="result"></pre>
+  <div class="result" id="result">
+    💡 Your smart reuse ideas will appear here...
+  </div>
+</div>
 
-  <script>
-    async function getReuseIdea() {
-      const description = document.getElementById("wasteType").value;
+<script>
+async function getSuggestion() {
+  const type = document.getElementById("type").value;
 
-      const res = await fetch("http://localhost:5000/ai-suggestion", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ description })
-      });
+  try {
+    const res = await fetch("http://localhost:5000/ai", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        description: type
+      })
+    });
 
-      const data = await res.json();
-      document.getElementById("result").innerText = data.suggestion;
-    }
-  </script>
+    const data = await res.json();
+
+    document.getElementById("result").innerHTML =
+      data.suggestion.replace(/\\n/g, "<br>");
+
+  } catch (err) {
+    document.getElementById("result").innerText =
+      "❌ Error loading AI suggestion";
+    console.error(err);
+  }
+}
+</script>
 
 </body>
 </html>
