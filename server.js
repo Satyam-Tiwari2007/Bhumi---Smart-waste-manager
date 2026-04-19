@@ -1,42 +1,57 @@
-import getWasteRoute from "./routes/getWaste.js";
-import authRoute from "./routes/auth.js";
-import uploadRoute from "./routes/upload.js";
 import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import contributionRoute from "./routes/contribution.js";
-import aiSuggestionRoute from "./routes/aiSuggestion.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// routes
+import uploadRoute from "./routes/upload.js";
+import getWasteRoute from "./routes/getWaste.js";
+import authRoute from "./routes/auth.js";
 import dashboardRoute from "./routes/dashboard.js";
+import aiRoute from "./routes/aiSuggestion.js";
+import chatbotRoute from "./routes/chatbot.js";
 
 dotenv.config();
 
 const app = express();
 
+// fix __dirname (ES module)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 // middleware
-app.use(cors());
+app.use(cors()); // ✅ fix CORS
 app.use(express.json());
-app.use("/upload", uploadRoute);
-app.use("/wastes", getWasteRoute);
-app.use("/uploads", express.static("uploads"));
-app.use("/uploads", express.static("uploads"));
-app.use("/auth", authRoute);
-app.use("/contribution", contributionRoute);
-app.use("/ai-suggestion", aiSuggestionRoute);
-app.use("/dashboard", dashboardRoute);
+
+// serve frontend files (VERY IMPORTANT)
+app.use(express.static(__dirname));
+
+// serve uploaded images
 app.use("/uploads", express.static("uploads"));
 
-// test route
+// routes
+app.use("/upload", uploadRoute);
+app.use("/feed", getWasteRoute);
+app.use("/auth", authRoute);
+app.use("/dashboard", dashboardRoute);
+app.use("/chatbot", chatbotRoute);
+
+app.use("/ai", aiRoute);
+
+// default route
 app.get("/", (req, res) => {
-  res.send("Bhumi Backend Running 🚀");
+  res.send("Bhumi API Running 🚀");
 });
 
-// connect mongodb
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("MongoDB Connected"))
-.catch(err => console.log(err));
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
-// start server
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+// server start
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

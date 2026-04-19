@@ -1,54 +1,89 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Bhumi Upload</title>
+  <title>Upload Waste</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #f6fbf6;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      width: 380px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+      text-align: center;
+      color: #166534;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #166534;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #result {
+      text-align: center;
+      margin-top: 15px;
+      color: green;
+    }
+  </style>
 </head>
 <body>
 
-  <h2>Upload Waste</h2>
+<div class="box">
+  <h2>📸 Upload Waste</h2>
 
   <form id="uploadForm">
-    <input type="file" name="image" required /><br><br>
-    <input type="text" name="location" placeholder="Location" required /><br><br>
-    <input type="text" name="description" placeholder="Description" required /><br><br>
+    <input type="file" name="image" required>
+    <input type="text" name="location" placeholder="Enter Location" required>
+    <input type="text" name="description" placeholder="Enter Description" required>
     <button type="submit">Upload</button>
   </form>
 
   <p id="result"></p>
+</div>
 
-  <script>
-    const form = document.getElementById("uploadForm");
+<script>
+const form = document.getElementById("uploadForm");
 
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-      // Get logged-in user
-      const user = JSON.parse(localStorage.getItem("user"));
+  const formData = new FormData(form);
 
-      // If not logged in
-      if (!user) {
-        alert("Please login first");
-        return;
-      }
+  const res = await fetch("http://localhost:5000/upload", {
+    method: "POST",
+    body: formData
+  });
 
-      const formData = new FormData(form);
-
-      // Send userId to backend
-      formData.append("userId", user._id);
-
-      try {
-        const res = await fetch("http://localhost:5000/upload", {
-          method: "POST",
-          body: formData
-        });
-
-        const data = await res.json();
-        document.getElementById("result").innerText = data.message;
-      } catch (error) {
-        document.getElementById("result").innerText = "Upload failed";
-      }
-    });
-  </script>
+  const data = await res.json();
+  document.getElementById("result").innerText = data.message;
+});
+</script>
 
 </body>
 </html>
