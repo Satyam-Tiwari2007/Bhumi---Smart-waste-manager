@@ -1,46 +1,101 @@
 # 🌍 Bhumi – Smart Waste Management Platform
 
-Bhumi is a full-stack web application built to promote **cleanliness, recycling, and smart waste management**.
-It allows users to report waste, track contributions, get reuse ideas, and interact with an intelligent chatbot.
+> ♻️ Report Waste | 🤖 AI Suggestions | 📊 Track Impact
+
+Bhumi is a full-stack web application designed to promote **cleanliness, recycling, and smart waste management**.
+It allows users to report waste, track their contributions, get reuse ideas, and interact with an intelligent chatbot.
 
 ---
 
-## 🚀 Features
+## 🌟 Features Overview
 
-### 👤 User Authentication
+---
 
-* Signup & Login system
-* Secure user session (localStorage based)
-* Personalized dashboard
+### 🏠 Home Page
 
-### 📸 Waste Reporting
+![Home Page](assets/HomePage.png)
 
-* Upload waste images
-* Add location and description
-* Store data in MongoDB
+The home page introduces Bhumi with a clean UI and highlights all major features of the platform including waste reporting, AI reuse, and community awareness.
+
+---
 
 ### 📊 Dashboard
 
-* Total reports count
-* Contributions tracking
-* Stars earned
-* Recent activity feed
+![Dashboard](assets/Dashboard.png)
+
+The dashboard provides a personalized overview for each user:
+
+* Total waste reports submitted
+* Contributions count
+* Stars earned ⭐
+* Recent activity tracking
+
+👉 Helps users track their environmental impact.
+
+---
+
+### 📸 Upload Waste
+
+![Upload Waste](assets/UplodeWaste.png)
+
+Users can report waste by:
+
+* Uploading an image
+* Adding location 📍
+* Writing description
+
+👉 This data is stored in MongoDB and contributes to community awareness.
+
+---
 
 ### 🌐 Bhumi Media Feed
 
-* View waste reports from users
-* Promote environmental awareness
+![Feed](assets/BhumiMedia.png)
+
+A social feed where users can:
+
+* View waste reports from others
+* Stay aware of environmental issues
+* Learn from real-world waste problems
+
+---
 
 ### ♻️ AI Reuse Suggestion
 
-* Get creative ideas to reuse waste items
-* Covers plastic, wood, cloth, metal, etc.
+![AI Reuse](assets/AIreuse.png)
 
-### 🤖 AI Chatbot (Offline – No API)
+Provides smart reuse ideas for waste materials:
 
-* Answers academic questions on waste management
-* Includes Indian laws & policies
-* Works without internet API (free & stable)
+* Plastic, wood, cloth, metal, etc.
+* Suggests creative and eco-friendly uses
+
+👉 Encourages recycling and reuse.
+
+---
+
+### 🤖 AI Chatbot
+
+![Chatbot](assets/Chatbot.png)
+
+An intelligent chatbot that:
+
+* Answers waste management questions
+* Provides academic knowledge
+* Explains Indian waste laws & policies
+
+👉 Works offline (no API required).
+
+---
+
+### 🔐 Login System
+
+![Login](assets/login.png)
+
+Secure authentication system:
+
+* User Signup & Login
+* Each user gets a personal dashboard
+* Data is stored and managed securely
 
 ---
 
@@ -59,35 +114,22 @@ It allows users to report waste, track contributions, get reuse ideas, and inter
 bhumi-backend/
 │
 ├── models/
-│   ├── User.js
-│   ├── Waste.js
-│
 ├── routes/
-│   ├── auth.js
-│   ├── upload.js
-│   ├── dashboard.js
-│   ├── getWaste.js
-│   ├── aiSuggestion.js
-│   ├── chatbot.js
-│   ├── contribution.js
-│
-├── controllers/        (if used)
-├── uploads/            (ignored in Git)
+├── controllers/
+├── uploads/
 │
 ├── server.js
 ├── package.json
-├── package-lock.json
 ├── .gitignore
 │
-├── home.html
-├── index.html
 ├── dashboard.html
-├── feed.html
-├── reuseAI.html
 ├── chatbot.html
+├── feed.html
+├── index.html
 ├── login.html
 ├── signup.html
-├── contribution.html
+├── reuseAI.html
+├── home.html
 ```
 
 ---
@@ -119,12 +161,6 @@ Create a file named `.env` in the root folder and add:
 MONGO_URI=your_mongodb_connection_string
 ```
 
-👉 Example:
-
-```
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/bhumiDB
-```
-
 ---
 
 ### 4️⃣ Run the Server
@@ -145,10 +181,9 @@ http://localhost:5000/home.html
 
 ## ⚠️ Important Notes
 
-* ❌ Do NOT upload `.env` file (contains sensitive data)
-* ❌ Do NOT upload `node_modules/`
-* 📁 `uploads/` folder is used for storing images
-* Make sure MongoDB is connected properly
+* Do NOT upload `.env` file (contains sensitive data)
+* `node_modules` is automatically installed
+* Ensure MongoDB is connected
 
 ---
 
@@ -164,11 +199,10 @@ http://localhost:5000/home.html
 
 ## 🎯 Future Improvements
 
-* 🌐 Deploy project online (Render / Vercel)
-* 📊 Leaderboard system
-* 🧠 Smarter chatbot (NLP-based)
-* 📱 Fully responsive UI
-* 🔐 JWT authentication
+* 🌐 Deploy project online (Render)
+* 📊 Add leaderboard system
+* 🧠 Improve chatbot intelligence
+* 📱 Make UI fully responsive
 
 ---
 
@@ -195,8 +229,8 @@ To encourage people to:
 
 If you like this project:
 
-* ⭐ Star this repository
+* ⭐ Star the repo
 * 🍴 Fork it
-* 📢 Share with others
+* 📢 Share it
 
 ---
