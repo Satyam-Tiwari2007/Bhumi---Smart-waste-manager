@@ -179,13 +179,6 @@ http://localhost:5000/home.html
 
 ---
 
-## ⚠️ Important Notes
-
-* Do NOT upload `.env` file (contains sensitive data)
-* `node_modules` is automatically installed
-* Ensure MongoDB is connected
-
----
 
 ## 🌍 Indian Waste Management Laws Covered
 
