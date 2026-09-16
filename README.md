@@ -48,7 +48,7 @@ Users can report waste by:
 
 ---
 
-### 🌐 Bhumi Media Feed
+###  Bhumi Media Feed
 
 ![Feed](assets/BhumiMedia.png)
 
