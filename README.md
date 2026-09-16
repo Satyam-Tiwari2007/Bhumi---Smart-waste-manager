@@ -1,17 +1,17 @@
-# 🌍 Bhumi – Smart Waste Management Platform
+# Bhumi – Smart Waste Management Platform
 
-> ♻️ Report Waste | 🤖 AI Suggestions | 📊 Track Impact
+>  Report Waste | 🤖 AI Suggestions | 📊 Track Impact
 
 Bhumi is a full-stack web application designed to promote **cleanliness, recycling, and smart waste management**.
 It allows users to report waste, track their contributions, get reuse ideas, and interact with an intelligent chatbot.
 
 ---
 
-## 🌟 Features Overview
+##  Features Overview
 
 ---
 
-### 🏠 Home Page
+###  Home Page
 
 ![Home Page](assets/HomePage.png)
 
@@ -19,7 +19,7 @@ The home page introduces Bhumi with a clean UI and highlights all major features
 
 ---
 
-### 📊 Dashboard
+###  Dashboard
 
 ![Dashboard](assets/Dashboard.png)
 
